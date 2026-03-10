@@ -1,38 +1,47 @@
-import {useState} from "react"
-import {searchResearch} from "../services/api"
+import { useState } from "react"
+import { searchResearch } from "../services/api"
 
 export default function SearchBar(){
 
-const [query,setQuery]=useState("")
-const [results,setResults]=useState([])
+const [query,setQuery] = useState("")
+const [results,setResults] = useState([])
 
-const search = async ()=>{
- const data = await searchResearch(query)
- setResults(data)
+const handleSearch = async ()=>{
+
+const data = await searchResearch(query)
+
+setResults(data)
+
 }
 
 return(
 
-<div className="p-6">
+<div>
+
+<div className="flex gap-3">
 
 <input
-className="border p-2 w-80"
-placeholder="Search research, skills, publications..."
+className="border p-3 w-96 rounded-lg"
+placeholder="Search research topics..."
 onChange={(e)=>setQuery(e.target.value)}
 />
 
 <button
-className="bg-blue-500 text-white p-2 ml-2"
-onClick={search}
+className="bg-blue-600 text-white px-5 py-2 rounded-lg"
+onClick={handleSearch}
 >
 Search
 </button>
 
-<div className="mt-4">
+</div>
+
+<div className="mt-5">
 
 {results.map((r,i)=>(
-<div key={i} className="border p-3 mt-2">
+<div key={i} className="border p-4 rounded-lg mt-3">
+
 {r[0]}
+
 </div>
 ))}
 

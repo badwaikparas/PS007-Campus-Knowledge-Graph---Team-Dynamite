@@ -1,26 +1,26 @@
 import ForceGraph2D from "react-force-graph"
-import {useEffect,useState} from "react"
-import {getGraph} from "../services/api"
+import { useEffect, useState } from "react"
+import { getGraph } from "../services/api"
 
 export default function GraphView(){
 
-const [data,setData]=useState()
+const [graphData,setGraphData] = useState()
 
 useEffect(()=>{
 
-getGraph().then(setData)
+getGraph().then(data=>{
+setGraphData(data)
+})
 
 },[])
 
-if(!data) return <p>Loading graph...</p>
+if(!graphData) return <p>Loading Knowledge Graph...</p>
 
 return(
 
-<div className="h-[500px]">
+<div className="h-[600px] bg-white rounded-xl shadow">
 
-<ForceGraph2D
-graphData={data}
-/>
+<ForceGraph2D graphData={graphData}/>
 
 </div>
 
