@@ -1,0 +1,6 @@
+{
+  "search": "/api/search",
+  "recommend": "/api/recommend",
+  "graph": "/api/graph",
+  "trends": "/api/trends"
+}
