@@ -29,22 +29,7 @@ const Dashboard = () => {
                             Explore relationships between students, skills, research projects and publications across the institution in real-time.
                         </p>
                     </div>
-                    <div className="flex gap-3">
-                        <button
-                            onClick={() => handleAction('Export Reports')}
-                            className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 hover:bg-slate-50 transition-all shadow-sm"
-                        >
-                            <ExternalLink size={16} />
-                            <span>Export Reports</span>
-                        </button>
-                        <button
-                            onClick={() => handleAction('Generate Insights')}
-                            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/25"
-                        >
-                            <Zap size={16} />
-                            <span>Generate Insights</span>
-                        </button>
-                    </div>
+
                 </header>
 
                 {/* Stats Grid */}

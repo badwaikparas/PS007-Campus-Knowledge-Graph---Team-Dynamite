@@ -13,14 +13,7 @@ const Navbar = ({ title }) => {
             </div>
 
             <div className="flex items-center gap-6">
-                <div className="relative group">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-hover:text-blue-500 transition-colors" size={18} />
-                    <input
-                        type="text"
-                        placeholder="Quick search..."
-                        className="pl-10 pr-4 py-2 bg-slate-50 border-none rounded-lg text-sm focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all w-64 outline-none"
-                    />
-                </div>
+
 
                 <div className="flex items-center gap-4 text-slate-500">
                     <button className="hover:text-slate-900 transition-colors relative">
