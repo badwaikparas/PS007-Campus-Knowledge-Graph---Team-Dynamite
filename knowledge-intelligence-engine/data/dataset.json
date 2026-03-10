@@ -1,0 +1,52 @@
+{
+  "students": [
+    { "id": "s1", "name": "Rahul", "skills": ["AI", "ML"] },
+    { "id": "s2", "name": "Priya", "skills": ["NLP", "Python"] },
+    {
+      "id": "s3",
+      "name": "Aman",
+      "skills": ["Computer Vision", "Deep Learning"]
+    }
+  ],
+
+  "faculties": [
+    { "id": "f1", "name": "Paras1", "skills": ["Blockchain", "Python"] },
+    { "id": "f2", "name": "Paras2", "skills": ["NLP", ""] }
+  ],
+
+  "projects": [
+    {
+      "id": "p1",
+      "facultyID": ["f1"],
+      "studentID": ["s1", "s2"],
+      "title": "AI Healthcare Prediction"
+    },
+    {
+      "id": "p2",
+      "facultyID": ["f1"],
+      "studentID": ["s1"],
+      "title": "NLP Research Assistant"
+    }
+  ],
+
+  "publications": [
+    {
+      "id": "pub1",
+      "facultyID": ["f1"],
+      "studentID": ["s1", "s2"],
+      "title": "Deep Learning in Healthcare"
+    },
+    {
+      "id": "pub2",
+      "facultyID": [],
+      "studentID": ["s1", "s2"],
+      "title": "Transformer Models"
+    },
+    {
+      "id": "pub3",
+      "facultyID": ["f1"],
+      "studentID": [],
+      "title": "Transformer Models"
+    }
+  ]
+}
