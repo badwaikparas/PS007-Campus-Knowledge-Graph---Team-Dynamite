@@ -53,7 +53,7 @@ function App() {
                 </Layout>
               </ProtectedRoute>
             } />
-            <Route path="/collaborators" element={
+            <Route path="/recommend" element={
               <ProtectedRoute>
                 <Layout>
                   <Collaborators />

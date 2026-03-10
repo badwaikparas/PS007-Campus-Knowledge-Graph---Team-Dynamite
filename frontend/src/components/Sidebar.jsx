@@ -6,7 +6,7 @@ const Sidebar = () => {
     const navItems = [
         { name: 'Dashboard', icon: <LayoutDashboard size={20} />, path: '/' },
         { name: 'Semantic Search', icon: <Search size={20} />, path: '/search' },
-        { name: 'Collaborators', icon: <Users size={20} />, path: '/collaborators' },
+        { name: 'Collaborators', icon: <Users size={20} />, path: '/recommend' },
         { name: 'Innovation Trends', icon: <TrendingUp size={20} />, path: '/trends' },
     ];
 
@@ -40,15 +40,7 @@ const Sidebar = () => {
                 ))}
             </nav>
 
-            <div className="p-4 border-t border-slate-100">
-                <div className="bg-gradient-to-br from-indigo-500 to-purple-600 p-4 rounded-xl text-white">
-                    <p className="text-xs font-semibold opacity-80 uppercase tracking-wider mb-1">Hackathon Demo</p>
-                    <p className="text-sm font-medium">AI-Powered Institutional Knowledge Engine</p>
-                    <div className="mt-3 bg-white/20 h-1.5 rounded-full overflow-hidden">
-                        <div className="bg-white h-full w-3/4"></div>
-                    </div>
-                </div>
-            </div>
+
         </div>
     );
 };
