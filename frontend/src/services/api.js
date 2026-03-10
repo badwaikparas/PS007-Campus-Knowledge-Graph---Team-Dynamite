@@ -2,7 +2,7 @@ import axios from 'axios';
 import endpoints from '../data/endpoints.json';
 import { mockGraphData, mockSearchResults, mockRecommendations, mockTrends } from '../data/mockData';
 
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = 'http://localhost:8000';
 
 const api = axios.create({
     baseURL: BASE_URL,
