@@ -59,12 +59,6 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         </div>
-                        <button
-                            onClick={() => handleAction('Expand Graph View')}
-                            className="text-blue-600 text-sm font-bold hover:underline"
-                        >
-                            Expand View
-                        </button>
                     </div>
 
                     <GraphView />
@@ -100,12 +94,7 @@ const Dashboard = () => {
                         </div>
                         <h4 className="text-lg font-bold text-slate-900">Invite Your Faculty</h4>
                         <p className="text-slate-500 text-sm font-medium">Add more researchers to uncover more hidden connections across your institution.</p>
-                        <button
-                            onClick={() => handleAction('Manage Access')}
-                            className="w-full py-3 bg-slate-900 text-white rounded-xl text-sm font-bold hover:bg-slate-800 transition-colors"
-                        >
-                            Manage Access
-                        </button>
+
                     </div>
                 </div>
             </main>

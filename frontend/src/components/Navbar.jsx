@@ -18,14 +18,7 @@ const Navbar = ({ title }) => {
 
             <div className="flex items-center gap-6">
                 {/* Search Bar */}
-                <div className="hidden lg:flex items-center gap-3 bg-slate-50 border border-slate-200 px-4 py-2 rounded-xl w-80 focus-within:bg-white focus-within:border-blue-500 transition-all group">
-                    <Search size={18} className="text-slate-400 group-focus-within:text-blue-500" />
-                    <input
-                        type="text"
-                        placeholder="Quick search..."
-                        className="bg-transparent border-none outline-none text-sm font-medium w-full"
-                    />
-                </div>
+
 
                 <div className="flex items-center gap-3">
                     <button className="p-2.5 text-slate-400 hover:text-slate-900 hover:bg-slate-50 rounded-xl transition-all relative">

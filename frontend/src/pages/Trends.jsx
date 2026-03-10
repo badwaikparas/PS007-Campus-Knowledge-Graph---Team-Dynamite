@@ -106,53 +106,56 @@ const Trends = () => {
 
                 {/* Insight Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    {/* Knowledge Graph Feature */}
                     <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
                         <div className="w-10 h-10 bg-slate-50 text-slate-400 rounded-xl flex items-center justify-center">
                             <BarChart3 size={20} />
                         </div>
-                        <h4 className="font-bold text-slate-900">Emerging Skills</h4>
+
+                        <h4 className="font-bold text-slate-900">
+                            Knowledge Graph Intelligence
+                        </h4>
+
                         <p className="text-sm text-slate-500 font-medium leading-relaxed">
-                            We've noticed a 40% uptick in "Generative AI" mentions across new research proposals in the last 3 months.
+                            Visualize relationships between students, research projects, skills, and publications
+                            through an interactive knowledge graph that reveals hidden academic connections
+                            across the institution.
                         </p>
-                        <button
-                            onClick={() => handleAction('Verify Clusters')}
-                            className="text-blue-600 text-sm font-bold hover:underline"
-                        >
-                            Verify Clusters
-                        </button>
                     </div>
 
+                    {/* AI Semantic Search Feature */}
                     <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
                         <div className="w-10 h-10 bg-slate-50 text-slate-400 rounded-xl flex items-center justify-center">
                             <PieChart size={20} />
                         </div>
-                        <h4 className="font-bold text-slate-900">Publication Velocity</h4>
+
+                        <h4 className="font-bold text-slate-900">
+                            AI Semantic Research Search
+                        </h4>
+
                         <p className="text-sm text-slate-500 font-medium leading-relaxed">
-                            The time from project initiation to first publication has decreased by an average of 14 days compared to last year.
+                            Discover research projects, publications, and expertise using AI-powered semantic search
+                            that understands research topics and returns the most relevant academic insights.
                         </p>
-                        <button
-                            onClick={() => handleAction('View Analytics')}
-                            className="text-blue-600 text-sm font-bold hover:underline"
-                        >
-                            View Analytics
-                        </button>
                     </div>
 
+                    {/* Collaborator Recommendation Feature */}
                     <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
                         <div className="w-10 h-10 bg-slate-50 text-slate-400 rounded-xl flex items-center justify-center">
                             <LineChart size={20} />
                         </div>
-                        <h4 className="font-bold text-slate-900">Collaboration Index</h4>
+
+                        <h4 className="font-bold text-slate-900">
+                            Smart Collaborator Discovery
+                        </h4>
+
                         <p className="text-sm text-slate-500 font-medium leading-relaxed">
-                            Inter-departmental projects now account for 35% of all research ventures, a record high for the institution.
+                            Identify potential research collaborators based on expertise, research domains,
+                            and project history to foster interdisciplinary innovation within the institution.
                         </p>
-                        <button
-                            onClick={() => handleAction('Heatmap View')}
-                            className="text-blue-600 text-sm font-bold hover:underline"
-                        >
-                            Heatmap View
-                        </button>
                     </div>
+
                 </div>
 
                 {/* Call to Action */}

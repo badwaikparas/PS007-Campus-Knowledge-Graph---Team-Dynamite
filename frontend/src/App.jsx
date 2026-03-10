@@ -12,7 +12,7 @@ import LoginPage from './pages/LoginPage';
 import OnboardingPage from './pages/OnboardingPage';
 
 // Replace with your actual Google Client ID from Google Cloud Console
-const GOOGLE_CLIENT_ID = "682662916894-placeholder.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = "256590798648-3l942qnraehartemmfdsfqc14ufjjv96.apps.googleusercontent.com";
 
 // Layout component to include Sidebar only for protected main pages
 const Layout = ({ children }) => {
