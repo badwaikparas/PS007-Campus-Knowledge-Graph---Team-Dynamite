@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { addUser, uploadFiles } from '../services/api';
 import {
     User, Mail, Phone, MapPin, Briefcase, GraduationCap,
     Link as LinkIcon, Code, Globe, BookOpen, FileText,
@@ -10,7 +11,9 @@ import {
 const OnboardingPage = () => {
     const { user, completeOnboarding } = useAuth();
     const navigate = useNavigate();
+    const fileInputRef = useRef(null);
     const [step, setStep] = useState(1);
+    const [selectedFiles, setSelectedFiles] = useState([]);
     const [formData, setFormData] = useState({
         name: user?.name || '',
         age: '',
@@ -51,10 +54,43 @@ const OnboardingPage = () => {
         setFormData(prev => ({ ...prev, profileLinks: newLinks }));
     };
 
-    const handleSubmit = (e) => {
+    const handleFileChange = (e) => {
+        const files = Array.from(e.target.files);
+        setSelectedFiles(files);
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        completeOnboarding(formData);
-        navigate('/');
+
+        // Transform data for backend
+        const names = formData.name.split(' ');
+        const userData = {
+            id: user?.email || user?.id || `user_${Date.now()}`,
+            first_name: names[0] || 'Unknown',
+            last_name: names.slice(1).join(' ') || 'User',
+            email: user?.email || formData.secondaryEmail || 'demo@example.com',
+            type: formData.role,
+            links: formData.profileLinks.filter(l => l.trim() !== ''),
+            skills: formData.skills.split(',').map(s => s.trim()).filter(s => s !== ''),
+            publications: formData.publications ? [formData.publications] : [],
+            projects: formData.projects.map(p => p.title).filter(t => t.trim() !== '')
+        };
+
+        try {
+            await addUser(userData);
+
+            // Upload files if any
+            if (selectedFiles.length > 0) {
+                await uploadFiles(userData.id, selectedFiles, 'publications');
+            }
+
+            completeOnboarding(formData);
+            navigate('/');
+        } catch (error) {
+            alert("Success, but failed to sync documents with backend. Continuing with local session.");
+            completeOnboarding(formData);
+            navigate('/');
+        }
     };
 
     const nextStep = () => setStep(prev => Math.min(prev + 1, totalSteps));
@@ -205,13 +241,25 @@ const OnboardingPage = () => {
 
                                 <div className="space-y-2 pt-4">
                                     <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Supporting Documents (PDF / PNG)</label>
-                                    <div className="border-4 border-dashed border-slate-100 rounded-3xl p-12 text-center group hover:border-blue-100 transition-all cursor-pointer bg-slate-50/50">
+                                    <div
+                                        onClick={() => fileInputRef.current.click()}
+                                        className="border-4 border-dashed border-slate-100 rounded-3xl p-12 text-center group hover:border-blue-100 transition-all cursor-pointer bg-slate-50/50"
+                                    >
                                         <div className="bg-white w-16 h-16 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-center text-slate-400 mx-auto mb-4 group-hover:text-blue-600 transition-all">
                                             <Upload size={24} />
                                         </div>
-                                        <p className="font-bold text-slate-900">Drop files here or click to browse</p>
+                                        <p className="font-bold text-slate-900">
+                                            {selectedFiles.length > 0 ? `${selectedFiles.length} files selected` : 'Drop files here or click to browse'}
+                                        </p>
                                         <p className="text-xs text-slate-400 font-medium mt-1">Upload ID card, degree certificates, or portfolio PDFs</p>
-                                        <input type="file" className="hidden" multiple accept=".pdf,.png" />
+                                        <input
+                                            ref={fileInputRef}
+                                            type="file"
+                                            className="hidden"
+                                            multiple
+                                            accept=".pdf,.png"
+                                            onChange={handleFileChange}
+                                        />
                                     </div>
                                 </div>
                             </div>

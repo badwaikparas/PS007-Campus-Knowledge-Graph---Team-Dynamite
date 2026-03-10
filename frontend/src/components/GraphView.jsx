@@ -21,6 +21,7 @@ const GraphView = () => {
     const getNodeColor = (node) => {
         switch (node.type) {
             case 'student': return '#2563eb'; // blue
+            case 'faculty': return '#475569'; // slate
             case 'skill': return '#8b5cf6';   // purple
             case 'project': return '#22c55e'; // green
             case 'publication': return '#f97316'; // orange
@@ -46,6 +47,10 @@ const GraphView = () => {
                     <div className="flex items-center gap-2">
                         <div className="w-3 h-3 rounded-full bg-blue-600"></div>
                         <span className="text-xs font-semibold text-slate-600">Students</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-slate-600"></div>
+                        <span className="text-xs font-semibold text-slate-600">Faculty</span>
                     </div>
                     <div className="flex items-center gap-2">
                         <div className="w-3 h-3 rounded-full bg-purple-600"></div>

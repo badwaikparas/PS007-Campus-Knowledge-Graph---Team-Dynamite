@@ -2,7 +2,7 @@ import axios from 'axios';
 import endpoints from '../data/endpoints.json';
 import { mockGraphData, mockSearchResults, mockRecommendations, mockTrends } from '../data/mockData';
 
-const BASE_URL = 'http://localhost:8000';
+const BASE_URL = 'http://localhost:8080';
 
 const api = axios.create({
     baseURL: BASE_URL,
@@ -51,6 +51,37 @@ export const getTrends = async () => {
     } catch (error) {
         console.warn("API Error, using mock data", error);
         return mockTrends;
+    }
+};
+
+export const addUser = async (userData) => {
+    try {
+        const response = await api.post('/users', userData);
+        return response.data;
+    } catch (error) {
+        console.error("Failed to add user to backend", error);
+        throw error;
+    }
+};
+
+export const uploadFiles = async (uploaderId, files, type = 'publications') => {
+    const formData = new FormData();
+    files.forEach(file => {
+        formData.append('files', file);
+    });
+
+    const endpoint = type === 'projects' ? '/upload/multiple/projects' : '/upload/multiple/publications';
+
+    try {
+        const response = await api.post(`${endpoint}?uploader_id=${uploaderId}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error(`Failed to upload ${type}`, error);
+        throw error;
     }
 };
 

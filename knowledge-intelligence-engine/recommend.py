@@ -2,14 +2,24 @@ import networkx as nx
 
 
 def recommend_collaborators(G, skill):
-
     recommended = []
 
-    # out of all the students add those students to the list who have the skill;
-    for node in G.nodes(data=True):
-        if node[1].get("type") == "student":
-            if G.has_edge(node[0], skill):
-                recommended.append(node[1]["name"])
+    skill = skill.lower()
+    for node, data in G.nodes(data=True):
+        if data.get("type") in ["student", "faculty"]:
+            if G.has_edge(node, skill):
+                # Return standardized user object for frontend
+                recommended.append({
+                    "id": node,
+                    "name": data.get("name", node),
+                    "expertise": data.get("type", "Researcher").capitalize(),
+                    "skills": data.get("skills", []),
+                    "metrics": {
+                        "accuracy": 95,  # Mock metric
+                        "projects": len(data.get("projects", [])),
+                        "publications": len(data.get("publications", []))
+                    }
+                })
 
     return recommended
 

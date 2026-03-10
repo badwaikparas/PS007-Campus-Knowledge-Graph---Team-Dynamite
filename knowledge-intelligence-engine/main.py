@@ -1,4 +1,5 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 import shutil
 from typing import List, Annotated
@@ -19,6 +20,15 @@ from user_store import students, faculties
 
 app = FastAPI()
 
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # For demo purposes, otherwise use ["http://localhost:5173"]
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 UPLOAD_DIR = Path("publications")
 UPLOAD_DIR.mkdir(exist_ok=True)
 
@@ -27,7 +37,79 @@ build_graph()
 
 @app.get("/search")
 def search(q: str):
-    return semantic_search(q)
+    results = semantic_search(q)
+    # Flatten and map to frontend expectations
+    flattened = []
+    
+    for p in results.get("projects", []):
+        flattened.append({
+            "id": f"proj_{p['title']}",
+            "type": "project",
+            "title": p["title"],
+            "description": f"Research project uploaded by {p['uploaded_by']}. Relevance score: {p['score']:.2f}",
+            "relatedResearchers": [p["uploaded_by"]]
+        })
+        
+    for pub in results.get("publications", []):
+        flattened.append({
+            "id": f"pub_{pub['title']}",
+            "type": "publication",
+            "title": pub["title"],
+            "description": f"Academic publication uploaded by {pub['uploaded_by']}. Relevance score: {pub['score']:.2f}",
+            "relatedResearchers": [pub["uploaded_by"]]
+        })
+        
+    return flattened
+
+
+@app.get("/graph")
+def get_graph_data():
+    nodes = []
+    links = []
+    
+    for node, attrs in G.nodes(data=True):
+        nodes.append({
+            "id": node,
+            "name": attrs.get("title", attrs.get("first_name", node)),
+            "type": attrs.get("type", "unknown")
+        })
+        
+    for source, target in G.edges():
+        links.append({
+            "source": source,
+            "target": target
+        })
+        
+    return {"nodes": nodes, "links": links}
+
+
+@app.get("/trends")
+def get_trends():
+    # Simple skill counting for trends
+    from collections import Counter
+    all_skills = []
+    for s in students:
+        all_skills.extend(s.get("skills", []))
+    for f in faculties:
+        all_skills.extend(f.get("skills", []))
+        
+    skill_counts = Counter(all_skills)
+    
+    # Format for recharts
+    skill_data = [{"name": skill, "value": count} for skill, count in skill_counts.most_common(5)]
+    
+    # Mock activity data for now
+    activity_data = [
+        {"name": "Jan", "value": 400},
+        {"name": "Feb", "value": 300},
+        {"name": "Mar", "value": 600},
+        {"name": "Apr", "value": 800},
+    ]
+    
+    return {
+        "skills": skill_data,
+        "activity": activity_data
+    }
 
 
 @app.get("/recommend")
@@ -73,17 +155,18 @@ async def upload_multiple_files(
         text = extract_text_from_pdf(file_path)
 
         publications.append(
-            {"title": file.filename, "uploader": uploader_id, "text": text}
+            {"title": file.filename, "uploaded_by": uploader_id, "text": text}
         )
 
         uploaded_files.append(
             {
                 "filename": file.filename,
                 "location": str(file_path),
-                "uploader": uploader_id,
+                "uploaded_by": uploader_id,
             }
         )
 
+    build_graph()
     print(publications)
 
     return {"uploaded_files": uploaded_files}
@@ -104,16 +187,17 @@ async def upload_multiple_files2(
 
         text = extract_text_from_pdf(file_path)
 
-        projects.append({"title": file.filename, "uploader": uploader_id, "text": text})
+        projects.append({"title": file.filename, "uploaded_by": uploader_id, "text": text})
 
         uploaded_files.append(
             {
                 "filename": file.filename,
                 "location": str(file_path),
-                "uploader": uploader_id,
+                "uploaded_by": uploader_id,
             }
         )
 
+    build_graph()
     print(projects)
 
     return {"uploaded_files": uploaded_files}

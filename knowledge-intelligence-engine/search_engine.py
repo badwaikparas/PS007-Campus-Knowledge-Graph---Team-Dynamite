@@ -24,7 +24,7 @@ def semantic_search(query):
             [
                 {
                     "title": doc["title"],
-                    "uploaded_by": doc["uploader"],
+                    "uploaded_by": doc.get("uploaded_by") or doc.get("uploader"),
                     "score": float(score),
                 }
                 for doc, score in zip(projects, scores)
@@ -44,7 +44,7 @@ def semantic_search(query):
             [
                 {
                     "title": doc["title"],
-                    "uploaded_by": doc["uploader"],
+                    "uploaded_by": doc.get("uploaded_by") or doc.get("uploader"),
                     "score": float(score),
                 }
                 for doc, score in zip(publications, scores)
