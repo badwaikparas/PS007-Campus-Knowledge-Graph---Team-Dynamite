@@ -2,7 +2,7 @@ import React from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Cpu, Sparkles, ShieldCheck, Globe, Zap } from 'lucide-react';
+import { Cpu, Sparkles, ShieldCheck, Globe, Zap, User } from 'lucide-react';
 
 const LoginPage = () => {
     const { login } = useAuth();
@@ -43,7 +43,7 @@ const LoginPage = () => {
                         <p className="text-slate-400 text-sm font-medium">Please sign in to access the institution's knowledge network.</p>
                     </div>
 
-                    <div className="flex justify-center py-4">
+                    <div className="flex flex-col gap-4 py-4">
                         <GoogleLogin
                             onSuccess={handleSuccess}
                             onError={handleError}
@@ -53,6 +53,22 @@ const LoginPage = () => {
                             shape="pill"
                             width="100%"
                         />
+
+                        <div className="flex items-center gap-4 py-2">
+                            <div className="h-px bg-slate-100 flex-1"></div>
+                            <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">OR</span>
+                            <div className="h-px bg-slate-100 flex-1"></div>
+                        </div>
+
+                        <button
+                            onClick={() => {
+                                handleSuccess({ credential: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkRlbW8gUmVzZWFyY2hlciIsImVtYWlsIjoiZGVtb0ByZXNlYXJjaC5hYy5pbiIsInBpY3R1cmUiOiIifQ.placeholder' });
+                            }}
+                            className="w-full py-3 px-4 bg-slate-50 border border-slate-200 rounded-full text-sm font-bold text-slate-600 hover:bg-slate-100 transition-all flex items-center justify-center gap-3"
+                        >
+                            <User size={18} className="text-slate-400" />
+                            <span>Continue as Demo Guest</span>
+                        </button>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4 pt-4">

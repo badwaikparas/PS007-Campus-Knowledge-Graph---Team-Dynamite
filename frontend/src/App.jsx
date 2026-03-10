@@ -14,6 +14,18 @@ import OnboardingPage from './pages/OnboardingPage';
 // Replace with your actual Google Client ID from Google Cloud Console
 const GOOGLE_CLIENT_ID = "682662916894-placeholder.apps.googleusercontent.com";
 
+// Layout component to include Sidebar only for protected main pages
+const Layout = ({ children }) => {
+  return (
+    <div className="flex bg-slate-50 min-h-screen font-sans text-slate-900 selection:bg-blue-100 selection:text-blue-900">
+      <Sidebar />
+      <div className="ml-64 flex-1">
+        {children}
+      </div>
+    </div>
+  );
+};
+
 function App() {
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
@@ -64,17 +76,5 @@ function App() {
     </GoogleOAuthProvider>
   );
 }
-
-// Layout component to include Sidebar only for protected main pages
-const Layout = ({ children }) => {
-  return (
-    <div className="flex bg-slate-50 min-h-screen font-sans text-slate-900 selection:bg-blue-100 selection:text-blue-900">
-      <Sidebar />
-      <div className="ml-64 flex-1">
-        {children}
-      </div>
-    </div>
-  );
-};
 
 export default App;

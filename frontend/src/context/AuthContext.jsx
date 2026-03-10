@@ -13,8 +13,13 @@ export const AuthProvider = ({ children }) => {
         const savedUser = localStorage.getItem('auth_user');
         const onboardingStatus = localStorage.getItem('onboarding_status');
 
-        if (savedUser) {
-            setUser(JSON.parse(savedUser));
+        if (savedUser && savedUser !== 'undefined') {
+            try {
+                setUser(JSON.parse(savedUser));
+            } catch (e) {
+                console.error("Failed to parse auth_user", e);
+                localStorage.removeItem('auth_user');
+            }
         }
         if (onboardingStatus === 'completed') {
             setIsOnboarded(true);
